@@ -7,4 +7,11 @@ public class ListNode {
     public ListNode(int v) {
         value = v;
     }
+
+    @Override
+    public String toString() {
+        return "ListNode{" +
+                "value=" + value +
+                '}';
+    }
 }

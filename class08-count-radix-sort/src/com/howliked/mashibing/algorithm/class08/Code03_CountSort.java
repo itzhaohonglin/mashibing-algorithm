@@ -7,15 +7,15 @@ public class Code03_CountSort {
         printArray(array);
     }
 
-    // only for 0~200 value
     public static void countSort(int[] arr) {
-        if (arr.length == 0) {
+        if (arr == null || arr.length == 0) {
             return;
         }
         int max = Integer.MIN_VALUE;
         for (int i = 0; i < arr.length; i++) {
             max = Math.max(max, arr[i]);
         }
+
         int[] bucket = new int[max + 1];
         for (int i = 0; i < arr.length; i++) {
             bucket[arr[i]]++;
@@ -23,7 +23,6 @@ public class Code03_CountSort {
 
         int j = 0;
         for (int i = 0; i < bucket.length; i++) {
-            
             while (bucket[i]-- > 0) {
                 arr[j++] = i;
             }
