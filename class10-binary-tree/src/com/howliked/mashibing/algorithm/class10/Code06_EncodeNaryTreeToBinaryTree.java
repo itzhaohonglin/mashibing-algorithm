@@ -50,39 +50,26 @@ public class Code06_EncodeNaryTreeToBinaryTree {
             if (root == null) {
                 return null;
             }
-            //1.先构建当前根节点
             TreeNode node = new TreeNode(root.val);
-            //2.当前节点的左节点为子节点
             node.left = en(root.children);
             return node;
         }
 
-        /**
-         * 将子节点构建为左树的右子节点
-         * 1.构建当前节点,如果根节点为空,则构建出来,否则为右节点
-         * 2.当前节点下推,变更为当前节点;
-         * 3.依次构建
-         *
-         * @param children
-         * @return
-         */
         private TreeNode en(List<Node> children) {
-            //返回根节点
             TreeNode root = null;
-            TreeNode cur = null;    //当前节点
+            TreeNode cur = null;
             for (Node child : children) {
-                TreeNode tNode = new TreeNode(child.val);
+                TreeNode node = new TreeNode(child.val);
                 if (root == null) {
-                    root = new TreeNode(tNode.val);
+                    root = new TreeNode(node.val);
                 } else {
-                    root.right = tNode;
+                    cur.right = node;
                 }
-                cur = tNode;
+                cur = node;
                 cur.left = en(child.children);
             }
-            return root;
+            return null;
         }
-
 
         // Decodes your binary tree to an n-ary tree.
         public Node decode(TreeNode root) {
@@ -93,19 +80,15 @@ public class Code06_EncodeNaryTreeToBinaryTree {
         }
 
         private List<Node> de(TreeNode root) {
-            if (root == null) {
-                return null;
-            }
-            List<Node> result = new ArrayList<>();
-            //只要有节点
+            List<Node> children = new ArrayList<>();
             while (root != null) {
-                //创建当前节点,并添加到子节点中
-                Node node = new Node(root.val);
-                result.add(node);
-                //依次向右查找是否有节点
+                Node node = new Node(root.val, de(root.left));
+                children.add(node);
                 root = root.right;
             }
-            return result;
+            return children;
         }
+
+
     }
 }
