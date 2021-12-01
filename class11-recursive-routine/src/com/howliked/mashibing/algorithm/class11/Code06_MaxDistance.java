@@ -9,6 +9,10 @@ package com.howliked.mashibing.algorithm.class11;
  */
 public class Code06_MaxDistance {
 
+    public static void main(String[] args) {
+
+    }
+
     private static class NodeInfo {
         private int maxDistance;
         private int height;
@@ -21,15 +25,12 @@ public class Code06_MaxDistance {
 
     private static NodeInfo process(TreeNode node) {
         if (node == null) {
-            new NodeInfo(0, 0);
+            return new NodeInfo(0, 0);
         }
         NodeInfo leftInfo = process(node.left);
-        NodeInfo rightInfo = process(node.right);
-        int height = Math.max(leftInfo.height, rightInfo.height) + 1;
-        int p1 = leftInfo.maxDistance;
-        int p2 = rightInfo.maxDistance;
-        int p3 = leftInfo.height + rightInfo.height + 1;
-        int maxDistance = Math.max(p1, Math.max(p2, p3));
+        NodeInfo rightINfo = process(node.right);
+        int height = Math.max(leftInfo.height, rightINfo.height) + 1;
+        int maxDistance = Math.max((leftInfo.height + rightINfo.height) + 1, Math.max(leftInfo.maxDistance, rightINfo.maxDistance));
         return new NodeInfo(maxDistance, height);
     }
 
