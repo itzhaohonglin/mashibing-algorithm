@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Set;
 
 public class Graph {
-    //key=node.value   value:node节点
     public Map<Integer, Node> nodes;
     public Set<Edge> edges;
 

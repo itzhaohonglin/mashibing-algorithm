@@ -21,7 +21,7 @@ package com.howliked.mashibing.algorithm.class13.unionfind;
 public class Code02_NumberOfProvinces {
 
     public int findCircleNum(int[][] isConnected) {
-        int N = isConnected.length;
+        int N = isConnected[0].length;
         UnionFind uf = new UnionFind(N);
         for (int i = 0; i < N; i++) {
             for (int j = i + 1; j < N; j++) {
@@ -30,66 +30,54 @@ public class Code02_NumberOfProvinces {
                 }
             }
         }
-        return uf.sets;
+        return uf.sets();
     }
 
     public static class UnionFind {
-        //记录parent值.parent[i] =k  ==> i的父亲是k
         private int[] parent;
-        //size[i]=k    ==> 如果i是代表节点,size[i]才有意义,否则无意义
-        //i所在的集合大小是多少
         private int[] size;
-        //辅助数组
         private int[] help;
-        //一共有多少个集合
         private int sets;
 
         public UnionFind(int N) {
             parent = new int[N];
             size = new int[N];
-            help = new int[N];
-            sets = N;
+            sets = 0;
             for (int i = 0; i < N; i++) {
-                //默认parent[i] 是自己
                 parent[i] = i;
                 size[i] = 1;
             }
         }
 
-        public void union(int i, int j) {
-            int topI = findTop(i);
-            int topJ = findTop(j);
-            if (topI != topJ) {
-                int sizeI = size[i];
-                int sizeJ = size[j];
-                if (sizeI > sizeJ) {
-                    size[i] += size[j];
-                    parent[j] = i;
+        public boolean isSameSet(int a, int b) {
+            return findParent(a) == findParent(b);
+        }
+
+        private int findParent(int val) {
+            int hi = 0;
+            while (val != parent[val]) {
+                help[hi++] = val;
+                val = parent[val];
+            }
+            for (; hi > 0; hi--) {
+                parent[help[hi]] = val;
+            }
+            return val;
+        }
+
+        public void union(int a, int b) {
+            int fa = findParent(a);
+            int fb = findParent(b);
+            if (fa != fb) {
+                if (size[a] >= size[b]) {
+                    size[fa] += size[fb];
+                    parent[fb] = fa;
                 } else {
-                    size[j] += size[i];
-                    parent[i] = j;
+                    parent[fa] = fb;
+                    size[fb] += size[fa];
                 }
                 sets--;
             }
-        }
-
-        /**
-         * 查询顶级节点,并且路径压缩
-         *
-         * @param i
-         * @return
-         */
-        // 从i开始一直往上，往上到不能再往上，代表节点，返回
-        private int findTop(int i) {
-            int hi = 0;
-            while (i != parent[i]) {
-                help[hi++] = i;
-                i = parent[i];
-            }
-            for (; hi >= 0; hi--) {
-                parent[help[hi]] = i;
-            }
-            return i;
         }
 
         public int sets() {

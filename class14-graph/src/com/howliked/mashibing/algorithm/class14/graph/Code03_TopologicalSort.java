@@ -17,23 +17,6 @@ public class Code03_TopologicalSort {
      * @return
      */
     public static List<Node> sortedTopology(Graph graph) {
-        HashMap<Node, Integer> inMap = new HashMap<>();
-        Queue<Node> zeroInQueue = new LinkedList<>();
-        for (Node node : graph.nodes.values()) {
-            inMap.put(node, node.in);
-            if (node.in == 0) {
-                zeroInQueue.offer(node);
-            }
-        }
-        List<Node> result = new ArrayList<>();
-        while (!zeroInQueue.isEmpty()) {
-            Node node = zeroInQueue.poll();
-            result.add(node);
-            inMap.put(node, inMap.get(node) - 1);
-            if (inMap.get(node) == 0) {
-                zeroInQueue.offer(node);
-            }
-        }
-        return result;
+        return null;
     }
 }

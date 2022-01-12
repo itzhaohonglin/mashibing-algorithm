@@ -1,12 +1,18 @@
 package com.howliked.mashibing.algorithm.class03;
 
 public class ListNode {
-    public static class Node {
-        public int value;
-        public ListNode next;
+    public int value;
+    public ListNode next;
 
-        public Node(int data) {
-            value = data;
-        }
+    public ListNode(int v) {
+        value = v;
+    }
+
+    @Override
+    public String toString() {
+        return "ListNode{" +
+                "value=" + value +
+                ", next=" + next +
+                '}';
     }
 }
